@@ -40,8 +40,8 @@ if [ $node == "0" ]; then
     sudo sed -i "s/# broadcast_rpc_address: 1.2.3.4/broadcast_rpc_address: 172.31.32.51/g" /etc/cassandra/cassandra.yaml
 elif [ $node = "1" ]; then
     sudo sed -i "s/# broadcast_rpc_address: 1.2.3.4/broadcast_rpc_address: 172.31.32.52/g" /etc/cassandra/cassandra.yaml
- elif [ $node = "2" ]; then
-     sudo sed -i "s/# broadcast_rpc_address: 1.2.3.4/broadcast_rpc_address: 172.31.32.53/g" /etc/cassandra/cassandra.yaml
+elif [ $node = "2" ]; then
+    sudo sed -i "s/# broadcast_rpc_address: 1.2.3.4/broadcast_rpc_address: 172.31.32.53/g" /etc/cassandra/cassandra.yaml
 else
     echo "$HELP"
     exit 1
