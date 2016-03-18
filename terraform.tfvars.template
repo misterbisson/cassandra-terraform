@@ -1,0 +1,8 @@
+user_name = "daniel"
+environment = "dans_testing_env"
+access_key = "####################"
+secret_key = "########################################"
+ssh_key_path = "<path2key/<keyname>.pem"
+ssh_key_name = "<keyname>"
+vpc_id = "vpc-#######"
+security_group_name = "cassandra"
