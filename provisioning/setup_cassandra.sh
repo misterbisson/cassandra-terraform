@@ -26,6 +26,8 @@ echo "$apt_source" | sudo tee "$apt_list" > /dev/null
 sudo apt-get update
 sudo apt-get install -y zulu-8
 sudo apt-get install -y emacs
+sudo apt-get install -y python-pip
+sudo pip install cassandra-driver
 echo "deb http://debian.datastax.com/community stable main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
 curl -L https://debian.datastax.com/debian/repo_key | sudo apt-key add -
 sudo apt-get update
