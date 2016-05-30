@@ -17,18 +17,21 @@ function create_fs_and_mount {
 }
 
 
-# Install datastax community 2.2 (required by Kong)
-
 create_fs_and_mount
 sudo apt-get update
-sudo apt-get install -y openjdk-7-jdk
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x219BD9C9
+apt_source='deb http://repos.azulsystems.com/debian stable main'
+apt_list='/etc/apt/sources.list.d/zulu.list'
+echo "$apt_source" | sudo tee "$apt_list" > /dev/null
+sudo apt-get update
+sudo apt-get install zulu-8
 sudo apt-get install -y emacs
 echo "deb http://debian.datastax.com/community stable main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
 curl -L https://debian.datastax.com/debian/repo_key | sudo apt-key add -
 sudo apt-get update
 sudo apt-get install -y gcc libev4 libev-dev python-dev
-sudo apt-get install -y dsc22 cassandra=2.2.* -V
-sudo apt-get install cassandra-tools=2.2.*
+sudo apt-get install -y dsc30 -V
+sudo apt-get install cassandra-tools
 sudo service cassandra stop
 sudo rm -rf /var/lib/cassandra/data/system/*
 sudo sed -i "s/cluster_name: 'Test Cluster'/cluster_name: 'kong_cassandra_cluster'/g" /etc/cassandra/cassandra.yaml
