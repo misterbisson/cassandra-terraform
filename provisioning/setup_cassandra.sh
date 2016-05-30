@@ -24,14 +24,14 @@ apt_source='deb http://repos.azulsystems.com/debian stable main'
 apt_list='/etc/apt/sources.list.d/zulu.list'
 echo "$apt_source" | sudo tee "$apt_list" > /dev/null
 sudo apt-get update
-sudo apt-get install zulu-8
+sudo apt-get install -y zulu-8
 sudo apt-get install -y emacs
 echo "deb http://debian.datastax.com/community stable main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
 curl -L https://debian.datastax.com/debian/repo_key | sudo apt-key add -
 sudo apt-get update
 sudo apt-get install -y gcc libev4 libev-dev python-dev
 sudo apt-get install -y dsc30 -V
-sudo apt-get install cassandra-tools
+sudo apt-get install -y cassandra-tools
 sudo service cassandra stop
 sudo rm -rf /var/lib/cassandra/data/system/*
 sudo sed -i "s/cluster_name: 'Test Cluster'/cluster_name: 'kong_cassandra_cluster'/g" /etc/cassandra/cassandra.yaml
