@@ -17,7 +17,7 @@ resource "aws_instance" "cassandra_0" {
     connection {
       type = "ssh"
       user = "ubuntu"
-      key_file = "${var.ssh_key_path}"
+      private_key = "${file(var.ssh_key_path)}"
     }
   }
 
@@ -27,7 +27,7 @@ resource "aws_instance" "cassandra_0" {
     connection {
       type = "ssh"
       user = "ubuntu"
-      key_file = "${var.ssh_key_path}"
+      private_key = "${file(var.ssh_key_path)}"
     }
   }
 
@@ -71,7 +71,7 @@ resource "aws_instance" "cassandra_1" {
     connection {
       type = "ssh"
       user = "ubuntu"
-      key_file = "${var.ssh_key_path}"
+      private_key = "${file(var.ssh_key_path)}"
     }
   }
 
@@ -81,7 +81,7 @@ resource "aws_instance" "cassandra_1" {
     connection {
       type = "ssh"
       user = "ubuntu"
-      key_file = "${var.ssh_key_path}"
+      private_key = "${file(var.ssh_key_path)}"
     }
   }
 
@@ -125,7 +125,7 @@ resource "aws_instance" "cassandra_2" {
     connection {
       type = "ssh"
       user = "ubuntu"
-      key_file = "${var.ssh_key_path}"
+      private_key = "${file(var.ssh_key_path)}"
     }
   }
 
@@ -135,7 +135,7 @@ resource "aws_instance" "cassandra_2" {
     connection {
       type = "ssh"
       user = "ubuntu"
-      key_file = "${var.ssh_key_path}"
+      private_key = "${file(var.ssh_key_path)}"
     }
   }
 
