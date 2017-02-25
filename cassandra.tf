@@ -31,26 +31,16 @@ resource "aws_instance" "cassandra_0" {
     }
   }
 
-  # provisioner "file" {
-  #   source = "provisioning/cassandra.yaml"
-  #   destination = "/tmp/provisioning/cassandra.yaml"
-  #   connection {
-  #     type = "ssh"
-  #     user = "ubuntu"
-  #     key_file = "${var.ssh_key_path}"
-  #   }
-  # }
-
-  # provisioner "remote-exec" {
-  #   inline = ["bash /tmp/provisioning/setup_cassandra.sh 0"]
-  #   connection {
-  #     type = "ssh"
-  #     user = "ubuntu"
-  #     key_file = "${var.ssh_key_path}"
-  #   }
-  # } 
+  provisioner "file" {
+    source = "provisioning/restore_from_snapshot.sh"
+    destination = "/tmp/provisioning/restore_from_snapshot.sh"
+    connection {
+      type = "ssh"
+      user = "ubuntu"
+      private_key = "${file(var.ssh_key_path)}"
+    }
+  }
 }
-
 
 resource "aws_instance" "cassandra_1" {
   instance_type = "m3.large"
@@ -84,25 +74,16 @@ resource "aws_instance" "cassandra_1" {
       private_key = "${file(var.ssh_key_path)}"
     }
   }
-
-  # provisioner "file" {
-  #   source = "provisioning/cassandra.yaml"
-  #   destination = "/tmp/provisioning/cassandra.yaml"
-  #   connection {
-  #     type = "ssh"
-  #     user = "ubuntu"
-  #     key_file = "${var.ssh_key_path}"
-  #   }
-  # }
   
-  # provisioner "remote-exec" {
-  #   inline = ["bash /tmp/provisioning/setup_cassandra.sh 1"]
-  #   connection {
-  #     type = "ssh"
-  #     user = "ubuntu"
-  #     key_file = "${var.ssh_key_path}"
-  #   }
-  # }  
+  provisioner "file" {
+    source = "provisioning/restore_from_snapshot.sh"
+    destination = "/tmp/provisioning/restore_from_snapshot.sh"
+    connection {
+      type = "ssh"
+      user = "ubuntu"
+      private_key = "${file(var.ssh_key_path)}"
+    }
+  }
 }
 
 
@@ -138,25 +119,16 @@ resource "aws_instance" "cassandra_2" {
       private_key = "${file(var.ssh_key_path)}"
     }
   }
-
-  # provisioner "file" {
-  #   source = "provisioning/cassandra.yaml"
-  #   destination = "/tmp/provisioning/cassandra.yaml"
-  #   connection {
-  #     type = "ssh"
-  #     user = "ubuntu"
-  #     key_file = "${var.ssh_key_path}"
-  #   }
-  # }
-
-  # provisioner "remote-exec" {
-  #   inline = ["bash /tmp/provisioning/setup_cassandra.sh 0"]
-  #   connection {
-  #     type = "ssh"
-  #     user = "ubuntu"
-  #     key_file = "${var.ssh_key_path}"
-  #   }
-  # } 
+  
+  provisioner "file" {
+    source = "provisioning/restore_from_snapshot.sh"
+    destination = "/tmp/provisioning/restore_from_snapshot.sh"
+    connection {
+      type = "ssh"
+      user = "ubuntu"
+      private_key = "${file(var.ssh_key_path)}"
+    }
+  }
 }
 
 
@@ -174,7 +146,7 @@ resource "aws_ebs_volume" "cassandra_1" {
   availability_zone = "us-west-2a"
   size = 500
   type = "gp2"
-  # snapshot="snap-0fdd1bd9b12b6fe51"
+  # snapshot_id="snap-0fdd1bd9b12b6fe51"
   tags {
     Name = "${var.user_name}_cassandra_1"
   }
@@ -184,7 +156,7 @@ resource "aws_ebs_volume" "cassandra_2" {
   availability_zone = "us-west-2a"
   size = 500
   type = "gp2"
-  # snapshot="snap-0774a8e08c0b6f205"
+  # snapshot_id="snap-0774a8e08c0b6f205"
   tags {
     Name = "${var.user_name}_cassandra_2"
   }
