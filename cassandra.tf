@@ -164,7 +164,7 @@ resource "aws_ebs_volume" "cassandra_0" {
   availability_zone = "us-west-2a"
   size = 500
   type = "gp2"
-
+  # snapshot_id="snap-0299ea162fd4d14c7"
   tags {
     Name = "${var.user_name}_cassandra_0"
   }
@@ -174,7 +174,7 @@ resource "aws_ebs_volume" "cassandra_1" {
   availability_zone = "us-west-2a"
   size = 500
   type = "gp2"
-
+  # snapshot="snap-0fdd1bd9b12b6fe51"
   tags {
     Name = "${var.user_name}_cassandra_1"
   }
@@ -184,7 +184,7 @@ resource "aws_ebs_volume" "cassandra_2" {
   availability_zone = "us-west-2a"
   size = 500
   type = "gp2"
-
+  # snapshot="snap-0774a8e08c0b6f205"
   tags {
     Name = "${var.user_name}_cassandra_2"
   }
