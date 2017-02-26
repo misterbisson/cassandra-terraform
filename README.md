@@ -2,7 +2,7 @@
 
 Follow these steps to get a 3 node cassandra cluster up and running.
 
-* Install terraform.
+* Install terraform last tested at ```Terraform v0.8.7```.
 
 * Create a vpc with cidr block "172.31.0.0/16" and allow public hostnames and dns resolution.
 If you don't allow public hostnames and dns nothing will work and may fail mysterously down the
