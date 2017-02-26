@@ -1,6 +1,6 @@
 # cassandra-terraform
 
-Follow these steps to get a 3 node cassandra cluster up and running.
+Follow these steps to get a 3 node cassandra cluster up and running, back it up with ebs snapshots, tear it down and restore from ebs snapshots.
 
 Install terraform last tested at ```Terraform v0.8.7```.
 
