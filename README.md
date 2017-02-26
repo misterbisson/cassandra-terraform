@@ -2,31 +2,23 @@
 
 Follow these steps to get a 3 node cassandra cluster up and running.
 
-* Install terraform last tested at ```Terraform v0.8.7```.
+Install terraform last tested at ```Terraform v0.8.7```.
 
-* Create a vpc with cidr block "172.31.0.0/16" and allow public hostnames and dns resolution.
+Create a vpc with cidr block "172.31.0.0/16" and allow public hostnames and dns resolution.
 If you don't allow public hostnames and dns nothing will work and may fail mysterously down the
-road.
+road. ```cp terraform.tfvars.template terraform.tfvars```
 
-* ```cp terraform.tfvars.template terraform.tfvars```
-
-* Populate terraform.tfvars with proper values (you will need the vpc id from step 2)
-
-* run
+Populate terraform.tfvars with proper values (you will need the vpc id from step 2) run
   ```
   terraform get
   ```
 
-That should bring down the external module for cassandra security groups.
-
-* run
+That should bring down the external module for cassandra security groups. run
   ```
   terraform plan
   ```
 
-Review what is going to happen.
-
-* run
+Review what is going to happen. run
   ```
   terraform apply
   ```
@@ -51,7 +43,7 @@ On each node in sequence do the following steps:
   bash /tmp/provisioning/setup_cassandra.sh 2
   ```
 
-After all the nodes are up and waiting for connection (tail -f /var/log/cassandra/system.out)
+After all the nodes are up and waiting for connections (tail -f /var/log/cassandra/system.out)
   ```
   ubuntu@ip-172-31-32-53:~$ nodetool status
   Datacenter: datacenter1
@@ -64,7 +56,7 @@ After all the nodes are up and waiting for connection (tail -f /var/log/cassandr
   UN  172.31.32.51  83.73 KB   256          ?       fbc39852-e7b0-4246-8542-f8e4ae8daaaa  rack1
   ```
 
-* Lets stop the nodes and take a snapshot of the data drives
+Stop the nodes and take a snapshot of the data drives
 
 First run stress to populate the data directory
 ```
@@ -107,7 +99,7 @@ sudo pkill cassandra
 sudo umount /var/lib/cassandra
 
 ```
-now create snapshots of the ebs volumnes and record the snapshot ids.  Give this process a
+now create snapshots of the ebs volumes and record the snapshot ids.  Give this process a
 few minutes and check in the ec2 console to make sure the snapshots have been created
 
 ```
@@ -177,7 +169,7 @@ based off the previous ebs snapshots.
   ssh -i <path2key>.pem ubuntu@<cassandra_2_ip>
   bash /tmp/provisioning/restore_from_snapshot.sh 2
   ```
-* You are using resources which is costing you money.  Lets tear it down.
+You are using resources which is costing you money.  Lets tear it down.
 As in the previous step ssh into each node and run the following to stop
 cassandra and unmount the data drives.
 
