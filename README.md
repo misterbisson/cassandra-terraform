@@ -113,7 +113,7 @@ cassandra_1 = 54.201.172.131
 cassandra_1_vol_id = vol-06625bd0646d6f237
 cassandra_2 = 54.201.200.121
 cassandra_2_vol_id = vol-0bbfa69dbf0fe7ed5
-daniel@dirac:~/Sources/cassandra-terraform$ aws ec2 create-snapshot --volume-id vol-0d2e6e6516fe87156{
+$ aws ec2 create-snapshot --volume-id vol-0d2e6e6516fe87156{
     "Description": "", 
     "Encrypted": false, 
     "VolumeId": "vol-0d2e6e6516fe87156", 
@@ -124,7 +124,7 @@ daniel@dirac:~/Sources/cassandra-terraform$ aws ec2 create-snapshot --volume-id 
     "SnapshotId": "snap-0299ea162fd4d14c7", 
     "OwnerId": "578367184912"
 }
-daniel@dirac:~/Sources/cassandra-terraform$ aws ec2 create-snapshot --volume-id vol-06625bd0646d6f237{
+$ aws ec2 create-snapshot --volume-id vol-06625bd0646d6f237{
     "Description": "", 
     "Encrypted": false, 
     "VolumeId": "vol-06625bd0646d6f237", 
@@ -135,7 +135,7 @@ daniel@dirac:~/Sources/cassandra-terraform$ aws ec2 create-snapshot --volume-id 
     "SnapshotId": "snap-0fdd1bd9b12b6fe51", 
     "OwnerId": "578367184912"
 }
-daniel@dirac:~/Sources/cassandra-terraform$ aws ec2 create-snapshot --volume-id vol-0bbfa69dbf0fe7ed5{
+$ aws ec2 create-snapshot --volume-id vol-0bbfa69dbf0fe7ed5{
     "Description": "", 
     "Encrypted": false, 
     "VolumeId": "vol-0bbfa69dbf0fe7ed5", 
