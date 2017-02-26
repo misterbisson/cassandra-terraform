@@ -151,14 +151,13 @@ daniel@dirac:~/Sources/cassandra-terraform$ aws ec2 create-snapshot --volume-id 
 
 Now run ```terraform destroy```
 
-To bring the previous cluster up using our backed up ebs snapshots
-Uncomment the snapshot_id fields in the ebs volume resource blocks in cassandra.tf
+To restore the cluster from our ebs snapshots, uncomment the snapshot_id fields in the ebs volume resource blocks in cassandra.tf
 Populate the snapshot_id fields with the snapshot_ids recorded before you brought
 down the cluster.  If you forgot just check for the snapshot ids in the ec2 console.
 Now run ```terraform plan``` followed by ```terraform apply``` to create a new cluster
 based off the previous ebs snapshots.
 
-To install cassandra do this on each node
+To install cassandra do this on each node (Note we are using restore_from_snapshot.sh rather than setup_cassandra.sh)
  ```
   ssh -i <path2key>.pem ubuntu@<cassandra_0_ip>
   bash /tmp/provisioning/restore_from_snapshot.sh 0
