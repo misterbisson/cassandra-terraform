@@ -27,7 +27,7 @@ To bring up resources.  At the end you should get the public IP address
 of your nodes.  run ```terraform show``` at any time to get those public ips
 for the next steps.
 
-*  Once your instances are up, ssh into each instance.  cassandra_0 and cassandra_1 are seed
+Once your instances are up, ssh into each instance.  cassandra_0 and cassandra_1 are seed
 nodes so you must do those one at a time.
 
 On each node in sequence do the following steps:
@@ -158,7 +158,7 @@ down the cluster.  If you forgot just check for the snapshot ids in the ec2 cons
 Now run ```terraform plan``` followed by ```terraform apply``` to create a new cluster
 based off the previous ebs snapshots.
 
-* To install cassandra do this on each node
+To install cassandra do this on each node
  ```
   ssh -i <path2key>.pem ubuntu@<cassandra_0_ip>
   bash /tmp/provisioning/restore_from_snapshot.sh 0
