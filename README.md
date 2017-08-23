@@ -3,12 +3,23 @@
 Follow these steps to get a 3 node cassandra cluster up and running, back it up with ebs snapshots, tear it down and restore from ebs snapshots.
 
 Install terraform last tested at ```Terraform v0.8.7```.
+  
+  ```sudo apt update```
+  
+  ```sudo apt install terraform```
+  
+create a new ```.tfvars``` file by copying the template file ```terraform.tfvars.template``` located in the root of the repository.
+  ```
+  cp terraform.tfvars.template terraform.tfvars
+  ```
 
 Create a vpc with cidr block "172.31.0.0/16" and allow public hostnames and dns resolution.
 If you don't allow public hostnames and dns nothing will work and may fail mysterously down the
-road. ```cp terraform.tfvars.template terraform.tfvars```
+road. Details: [Setup an AWS VPC](http://docs.aws.amazon.com/AmazonVPC/latest/GettingStartedGuide/getting-started-ipv4.html) 
 
-Populate terraform.tfvars with proper values (you will need the vpc id from step 2) run
+Remember the vpc_id when you create the VPC, terraform needs that info in the next step.
+
+Populate terraform.tfvars with proper values. run
   ```
   terraform get
   ```
