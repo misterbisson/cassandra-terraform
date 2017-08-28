@@ -4,7 +4,7 @@ variable "secret_key" {}
 variable "ssh_key_path" {}
 variable "ssh_key_name" {}
 variable "instance_type" {
-  default = "t2.micro"
+  default = "t3.large"
 }
 variable "vpc_id" {}
 variable "security_group_name" {}
