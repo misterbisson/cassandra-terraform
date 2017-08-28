@@ -1,5 +1,5 @@
 resource "aws_instance" "cassandra_0" {
-  instance_type = "m3.large"
+  instance_type = "${var.instance_type}"
   ami = "ami-412dcf21"
   key_name = "${var.ssh_key_name}"
   private_ip = "172.31.32.51"
@@ -43,7 +43,7 @@ resource "aws_instance" "cassandra_0" {
 }
 
 resource "aws_instance" "cassandra_1" {
-  instance_type = "m3.large"
+  instance_type = "${var.instance_type}"
   ami = "ami-412dcf21"
   key_name = "${var.ssh_key_name}"
   private_ip = "172.31.32.52"
@@ -88,7 +88,7 @@ resource "aws_instance" "cassandra_1" {
 
 
 resource "aws_instance" "cassandra_2" {
-  instance_type = "m3.large"
+  instance_type = "${var.instance_type}"
   ami = "ami-412dcf21"
   key_name = "${var.ssh_key_name}"
   private_ip = "172.31.32.53"
