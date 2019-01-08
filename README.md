@@ -1,6 +1,6 @@
 # cassandra-terraform
 
-Follow these steps to get a 3 node cassandra cluster up and running, back it up with ebs snapshots, tear it down and restore from ebs snapshots.
+Follow these steps to get a 3 node cassandra cluster up and running.
 
 Install terraform last tested at ```Terraform v0.8.7```.
   
@@ -12,12 +12,6 @@ create a new ```.tfvars``` file by copying the template file ```terraform.tfvars
   ```
   cp terraform.tfvars.template terraform.tfvars
   ```
-
-Create a vpc with cidr block "172.31.0.0/16" and allow public hostnames and dns resolution.
-If you don't allow public hostnames and dns nothing will work and may fail mysterously down the
-road. Details: [Setup an AWS VPC](http://docs.aws.amazon.com/AmazonVPC/latest/GettingStartedGuide/getting-started-ipv4.html) 
-
-Remember the vpc_id when you create the VPC, terraform needs that info in the next step.
 
 Populate terraform.tfvars with proper values. run
   ```
@@ -67,9 +61,7 @@ After all the nodes are up and waiting for connections (tail -f /var/log/cassand
   UN  172.31.32.51  83.73 KB   256          ?       fbc39852-e7b0-4246-8542-f8e4ae8daaaa  rack1
   ```
 
-Stop the nodes and take a snapshot of the data drives
-
-First run stress to populate the data directory
+Now run stress to populate the data directory
 ```
 cassandra-stress write n=1000000
 After running cassandra stress on node 3:
@@ -103,15 +95,7 @@ cqlsh:keyspace1> select * from keyspace1.standard1 limit 2;
 
 ```
 
-Next flush the mem tables to disk, stop cassandra and unmount the ebs volume for each node
-```
-nodetool flush
-sudo pkill cassandra
-sudo umount /var/lib/cassandra
-
-```
-now create snapshots of the ebs volumes and record the snapshot ids.  Give this process a
-few minutes and check in the ec2 console to make sure the snapshots have been created
+There are many useful outputs:
 
 ```
 $ terraform show
@@ -160,31 +144,4 @@ $ aws ec2 create-snapshot --volume-id vol-0bbfa69dbf0fe7ed5{
 
 ```
 
-Now run ```terraform destroy```
-
-To restore the cluster from our ebs snapshots, uncomment the snapshot_id fields in the ebs volume resource blocks in cassandra.tf
-Populate the snapshot_id fields with the snapshot_ids recorded before you brought
-down the cluster.  If you forgot just check for the snapshot ids in the ec2 console.
-Now run ```terraform plan``` followed by ```terraform apply``` to create a new cluster
-based off the previous ebs snapshots.
-
-To install cassandra do this on each node (Note we are using restore_from_snapshot.sh rather than setup_cassandra.sh)
- ```
-  ssh -i <path2key>.pem ubuntu@<cassandra_0_ip>
-  bash /tmp/provisioning/restore_from_snapshot.sh 0
-
-  ssh -i <path2key>.pem ubuntu@<cassandra_1_ip>
-  bash /tmp/provisioning/restore_from_snapshot.sh 1
-
-  ssh -i <path2key>.pem ubuntu@<cassandra_2_ip>
-  bash /tmp/provisioning/restore_from_snapshot.sh 2
-  ```
-You are using resources which is costing you money.  Lets tear it down.
-As in the previous step ssh into each node and run the following to stop
-cassandra and unmount the data drives.
-
-  ```
-  sudo service cassandra stop
-  sudo umount /var/lib/cassandra
-  ```
-Finish the job with ```terraform destroy```
+Take down the cluster with ```terraform destroy```

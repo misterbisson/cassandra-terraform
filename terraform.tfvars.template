@@ -1,5 +1,5 @@
-user_name = "daniel"
-environment = "dans_testing_env"
+user_name = "anything" # it's just a prefix and tag to help identify the cluster components
+environment = "anythings_test_env"
 access_key = "####################"
 secret_key = "########################################"
 ssh_key_path = "<path2key/<keyname>.pem"

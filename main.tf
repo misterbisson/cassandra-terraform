@@ -1,7 +1,15 @@
+resource "aws_vpc" "cassandra" {
+    cidr_block = "172.31.0.0/16"
+    enable_dns_hostnames = true
+    tags {
+        Name = "cassandra-testing"
+    }
+}
+
 module "cassandra_security_group" {
   source = "github.com/terraform-community-modules/tf_aws_sg//sg_cassandra"
   security_group_name = "${var.security_group_name}-cassandra"
-  vpc_id = "${var.vpc_id}"
+  vpc_id = "${aws_vpc.cassandra.id}"
   source_cidr_block = "${var.source_cidr_block}"
 }
 
@@ -12,7 +20,7 @@ provider "aws" {
 }
 
 resource "aws_subnet" "main" {
-  vpc_id = "${var.vpc_id}"
+  vpc_id = "${aws_vpc.cassandra.id}"
   cidr_block = "172.31.32.0/20"
   map_public_ip_on_launch = true
   availability_zone = "us-west-2a"
@@ -22,7 +30,7 @@ resource "aws_subnet" "main" {
 }
 
 resource "aws_internet_gateway" "gw" {
-  vpc_id = "${var.vpc_id}"
+  vpc_id = "${aws_vpc.cassandra.id}"
   tags {
     Name = "${var.user_name}"
   }
@@ -30,7 +38,7 @@ resource "aws_internet_gateway" "gw" {
 
 
 resource "aws_route_table" "r" {
-  vpc_id = "${var.vpc_id}"
+  vpc_id = "${aws_vpc.cassandra.id}"
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = "${aws_internet_gateway.gw.id}"
@@ -38,7 +46,7 @@ resource "aws_route_table" "r" {
 }
 
 resource "aws_network_acl" "main" {
-  vpc_id = "${var.vpc_id}"
+  vpc_id = "${aws_vpc.cassandra.id}"
   subnet_ids = ["${aws_subnet.main.id}"]
   egress{
     protocol = "all"
@@ -71,7 +79,7 @@ resource "aws_route_table_association" "a" {
 resource "aws_security_group" "allow_internet_access" {
   name = "allow_internet_access"
   description = "Allow outbound internet communication."
-  vpc_id = "${var.vpc_id}"
+  vpc_id = "${aws_vpc.cassandra.id}"
 
   tags {
     Name = "{var.user_name}"
@@ -88,7 +96,7 @@ resource "aws_security_group" "allow_internet_access" {
 resource "aws_security_group" "allow_all_ssh_access" {
   name = "allow_all_ssh_access"
   description = "ALlow ssh access from any ip"
-  vpc_id = "${var.vpc_id}"
+  vpc_id = "${aws_vpc.cassandra.id}"
   tags {
     Name = "var.user_name"
   }

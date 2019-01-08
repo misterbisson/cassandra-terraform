@@ -1,6 +1,22 @@
+data "aws_ami" "ubuntu" {
+    most_recent = true
+
+    filter {
+        name = "name"
+        values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
+    }
+
+    filter {
+        name   = "virtualization-type"
+        values = ["hvm"]
+    }
+
+    owners = ["099720109477"] # Canonical
+}
+
 resource "aws_instance" "cassandra_0" {
   instance_type = "${var.instance_type}"
-  ami = "ami-412dcf21"
+  ami = "${data.aws_ami.ubuntu.id}"
   key_name = "${var.ssh_key_name}"
   private_ip = "172.31.32.51"
   subnet_id = "${aws_subnet.main.id}"
@@ -30,21 +46,11 @@ resource "aws_instance" "cassandra_0" {
       private_key = "${file(var.ssh_key_path)}"
     }
   }
-
-  provisioner "file" {
-    source = "provisioning/restore_from_snapshot.sh"
-    destination = "/tmp/provisioning/restore_from_snapshot.sh"
-    connection {
-      type = "ssh"
-      user = "ubuntu"
-      private_key = "${file(var.ssh_key_path)}"
-    }
-  }
 }
 
 resource "aws_instance" "cassandra_1" {
   instance_type = "${var.instance_type}"
-  ami = "ami-412dcf21"
+  ami = "${data.aws_ami.ubuntu.id}"
   key_name = "${var.ssh_key_name}"
   private_ip = "172.31.32.52"
   subnet_id = "${aws_subnet.main.id}"
@@ -74,22 +80,12 @@ resource "aws_instance" "cassandra_1" {
       private_key = "${file(var.ssh_key_path)}"
     }
   }
-  
-  provisioner "file" {
-    source = "provisioning/restore_from_snapshot.sh"
-    destination = "/tmp/provisioning/restore_from_snapshot.sh"
-    connection {
-      type = "ssh"
-      user = "ubuntu"
-      private_key = "${file(var.ssh_key_path)}"
-    }
-  }
 }
 
 
 resource "aws_instance" "cassandra_2" {
   instance_type = "${var.instance_type}"
-  ami = "ami-412dcf21"
+  ami = "${data.aws_ami.ubuntu.id}"
   key_name = "${var.ssh_key_name}"
   private_ip = "172.31.32.53"
   subnet_id = "${aws_subnet.main.id}"
@@ -113,16 +109,6 @@ resource "aws_instance" "cassandra_2" {
   provisioner "file" {
     source = "provisioning/setup_cassandra.sh"
     destination = "/tmp/provisioning/setup_cassandra.sh"
-    connection {
-      type = "ssh"
-      user = "ubuntu"
-      private_key = "${file(var.ssh_key_path)}"
-    }
-  }
-  
-  provisioner "file" {
-    source = "provisioning/restore_from_snapshot.sh"
-    destination = "/tmp/provisioning/restore_from_snapshot.sh"
     connection {
       type = "ssh"
       user = "ubuntu"

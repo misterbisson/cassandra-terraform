@@ -12,7 +12,7 @@ variable "security_group_name" {}
 # We cannot do interpolations in varables.
 # Default source_cidr_block is the main subnet defined in aws_subnet.main.cidr_block.
 variable "source_cidr_block" {
-  default = "172.31.32.0/20"
+  default = ["172.31.32.0/20"]
 }
 
 variable "region" {
